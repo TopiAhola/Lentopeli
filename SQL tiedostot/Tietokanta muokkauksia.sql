@@ -64,3 +64,13 @@ UPDATE kentat SET GDP = '46' WHERE iso_country = 'GB';
 UPDATE kentat SET GDP = '21' WHERE iso_country = 'VA';
 
 
+--- Muokkaus 3
+-- kirjoitusasun muokkauksia
+
+update kentat set country_fi = "Venäjä" where iso_country = "RU";
+update kentat set country_fi = "Valko-Venäjä" where iso_country = "BY";
+update kentat set country_fi = "Itävalta" where iso_country = "AT";
+update kentat set country_fi = "Tsekki" where iso_country = "CZ";
+update kentat set country_fi = "Färsaaret" where iso_country = "FO";
+
+

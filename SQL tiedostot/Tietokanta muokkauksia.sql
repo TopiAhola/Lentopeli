@@ -74,3 +74,4 @@ update kentat set country_fi = "Tsekki" where iso_country = "CZ";
 update kentat set country_fi = "Färsaaret" where iso_country = "FO";
 
 
+

@@ -75,3 +75,8 @@ update kentat set country_fi = "Färsaaret" where iso_country = "FO";
 
 
 
+-- Muokkaus 4
+-- Luodaan käyttäjä "Game" jolla tietokantaa käytetään.
+
+CREATE USER game@localhost;
+GRANT SELECT, INSERT, UPDATE ON flight_game.* to game@localhost;

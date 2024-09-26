@@ -1,13 +1,13 @@
 
--- Muokkaus 1:
--- Lisätään kentat tauluun sarake country_fi jossa on maan nimi suomeksi.
--- Siltä varalta, että tarvitaan myöhemmin.
+--Muokkaus 1:
+--Lisätään kentat tauluun sarake country_fi jossa on maan nimi suomeksi.
+--Siltä varalta, että tarvitaan myöhemmin.
 alter table kentat
 add column country_fi varchar(40) NULL;
 
 
 --Muokkaus 2:
---lisätää kentat tauluun GDP ja syötetään arvot:
+--Lisätää kentat tauluun GDP ja syötetään arvot:
 
 alter table kentat
 add column GDP int;
@@ -64,8 +64,8 @@ UPDATE kentat SET GDP = '46' WHERE iso_country = 'GB';
 UPDATE kentat SET GDP = '21' WHERE iso_country = 'VA';
 
 
---- Muokkaus 3
--- kirjoitusasun muokkauksia
+--Muokkaus 3
+--Kirjoitusasun muokkauksia
 
 update kentat set country_fi = "Venäjä" where iso_country = "RU";
 update kentat set country_fi = "Valko-Venäjä" where iso_country = "BY";
@@ -75,8 +75,58 @@ update kentat set country_fi = "Färsaaret" where iso_country = "FO";
 
 
 
--- Muokkaus 4
--- Luodaan käyttäjä "Game" jolla tietokantaa käytetään.
+--Muokkaus 4
+--Luodaan käyttäjä "Game" jolla tietokantaa käytetään.
 
 CREATE USER game@localhost;
 GRANT SELECT, INSERT, UPDATE ON flight_game.* to game@localhost;
+
+--Muokkaus 5
+--Tietokannan lopullinen muoto?
+
+--Sallitaan taulujen poistaminen vierasavaimista huolimatta
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+
+--Poistetaan turhat taulut
+DROP TABLE IF EXISTS country;
+DROP TABLE IF EXISTS goal_reached;
+DROP TABLE IF EXISTS airport;
+
+--GOAL
+DROP TABLE IF EXISTS goal;
+CREATE TABLE goal (
+    `game_id` int(10) NOT NULL,
+    `ident` varchar(40) NOT NULL,
+    `reached` int(1) NOT NULL,
+PRIMARY KEY (game_id, ident),
+KEY game_id (game_id),
+KEY ident (ident)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--GAME
+DROP TABLE IF EXISTS game;
+CREATE TABLE game
+(
+    `id`           int(10) NOT NULL,
+    `name`         varchar(40) NOT NULL,
+    `location`     varchar(40) NOT NULL,
+    `money`        FLOAT(10)   NOT NULL,
+    `co2`          FLOAT(10)   NOT NULL,
+    `money_gained` FLOAT(10)   NOT NULL,
+    `money_spent`  FLOAT(10)   NOT NULL,
+    `distance`     FLOAT(10)   NOT NULL,
+    `flights`      INT(10) NOT NULL,
+    PRIMARY KEY (id),
+    KEY            location (location)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--VISITED
+DROP TABLE IF EXISTS visited;
+CREATE TABLE visited
+(
+    `game_id` int(10) NOT NULL,
+    `ident`   varchar(40) NOT NULL,
+    PRIMARY KEY (game_id, ident),
+    KEY       game_id (game_id),
+    KEY       ident (ident)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;

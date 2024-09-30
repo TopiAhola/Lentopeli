@@ -19,10 +19,8 @@ CREATE TABLE `kentat` (
   `home_link` varchar(40) DEFAULT NULL,
   `wikipedia_link` varchar(40) DEFAULT NULL,
   `keywords` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`ident`),
-  KEY `iso_country` (`iso_country`),
-    CONSTRAINT `kentat_ibfk_1` FOREIGN KEY (`iso_country`) REFERENCES `country` (`iso_country`)
-  );
+  PRIMARY KEY (`ident`)
+    );
 
 --Syötetään halutut kentät:
 insert into kentat

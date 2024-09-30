@@ -20,6 +20,7 @@ CREATE TABLE `kentat` (
   `wikipedia_link` varchar(40) DEFAULT NULL,
   `keywords` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`ident`)
+
     );
 
 --Syötetään halutut kentät:

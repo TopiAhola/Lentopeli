@@ -1,11 +1,15 @@
 ### Eurooppalainen Turisti - Projekti
 
-#### Funktiot:
+#### Importit
+import mysql.connector <br>
+import random
+
+#### Funktiot
 
 def distance( origin, destination ):
 Laskee kahden kentän välisen etäisyyden. Syöte on kenttien ident-koodit. Antaa tuloksen kilometreinä kokonaislukuna.
 
-
+def random_location(): Antaa satunnaisen kentan ident-koodin
 
 
 

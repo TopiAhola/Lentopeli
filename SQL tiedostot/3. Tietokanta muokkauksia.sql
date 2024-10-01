@@ -107,7 +107,7 @@ KEY ident (ident)
 DROP TABLE IF EXISTS game;
 CREATE TABLE game
 (
-    `id`           int(10) NOT NULL,
+    `id`           int(10) NOT NULL auto_increment,
     `name`         varchar(40) NOT NULL,
     `location`     varchar(40) NOT NULL,
     `money`        FLOAT(10)   NOT NULL,

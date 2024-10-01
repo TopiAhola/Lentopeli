@@ -1,5 +1,6 @@
 --Luodaan uusi taulu Kentat:
 
+DROP TABLE IF EXISTS kentat;
 CREATE TABLE `kentat` (
   `id` int(11) NOT NULL,
   `ident` varchar(40) NOT NULL,

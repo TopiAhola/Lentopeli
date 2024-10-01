@@ -1,5 +1,10 @@
 ## Eurooppalainen Turisti - Projekti
 
+###Funktiot:
+
+def distance( origin, destination ):
+Ottaa kahden lentokentän ident-koodit ja antaa etäisyyden kilometreinä.
+
 
 
 

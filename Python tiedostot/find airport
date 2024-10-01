@@ -1,0 +1,47 @@
+def find_airports():
+    #arvotaan aloitus kenttä ja 4 lähintä kenttää ja yksi jokeri kenttä
+    parametrit = {
+        "host": 'localhost',
+        'database': '',
+        'user': '',
+        'password': '',
+        "collation": "latin1_swedish_ci"
+    }
+    yhteys = mysql.connector.connect(**parametrit)
+    kursori = yhteys.cursor()
+
+    # Haetaan kaikki kentät
+    sql = "SELECT Ident, Country_fi FROM kentat;"
+    kursori.execute(sql)
+    kentat = [row[0] for row in kursori.fetchall()]  # Kenttien identit
+    kursori.close()
+
+    #arvotaan aloitus kenttä
+    aloitus_kenttä = random.choice(kentat)
+    print(f"Aloituskenttä: {aloitus_kenttä}")
+
+    etaisyydet = []
+    for kentta in kentat:
+        if kentta != aloitus_kenttä:
+            dist = distance(aloitus_kenttä, kentta)
+            etaisyydet.append((kentta, dist))
+
+    etaisyydet.sort(key=lambda x: x[1])
+    lahi_kentat = etaisyydet[:4]
+
+    print("4 lähintä lentokenttää: ")
+    for kentta in lahi_kentat:
+        print(f"{kentta[0]}: {kentta[1]} km")
+
+    lahi_identit = [kentta[0] for kentta in lahi_kentat]
+    jokeri = [kentta for kentta in kentat if kentta not in lahi_identit and kentta != aloitus_kenttä]
+
+    if jokeri:  # Tarkistetaan, että listassa on mahdollisia jokerikenttiä
+        jokeri_kentta = random.choice(jokeri)  # Arvotaan jokerikenttä
+        jokeri_etaisyys = distance(aloitus_kenttä, jokeri_kentta)  # Lasketaan jokerikentän etäisyys
+        print(f"Jokerikenttä: {jokeri_kentta}, Etäisyys: {jokeri_etaisyys} km")
+    else:
+        print("Ei löytynyt sopivaa jokerikenttää.")
+
+
+find_airports()

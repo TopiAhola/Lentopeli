@@ -29,11 +29,3 @@ def distance( origin, destination ):
 
 
 
-
-icao1 =  "lati"
-icao2 =  "loww"
-
-etäisyys = distance(icao1, icao2)
-print(etäisyys)
-print(f"Lentokenttien etäisyys on {etäisyys:.1f} km" )
-

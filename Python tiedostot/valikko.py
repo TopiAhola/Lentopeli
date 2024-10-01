@@ -1,18 +1,23 @@
 #Valikko funktio
 def valikko():
     print("\n1. Lentokentät \n2. Tavoite lentokentät \n3. Pelin säännöt")
-    valinta = int(input("Syötä numero: "))
+    valinta = input("Syötä numero: \n")
 
     # Lentokentät
-    if valinta == 1:
+    if valinta == "1":
         print("Lentokentät funktio")
     
     #Tavoite lentokentät
-    elif valinta == 2:
+    elif valinta == "2":
         print("Tavoite lentokentät funktio")
 
-    elif valinta == 3:
+    #Pelin säännöt
+    elif valinta == "3":
         print("Säännöt funktio")
+
+    #Virheellinen valinta
+    else:
+        print("Virheellinen valinta")
 
 while True:
     valikko()

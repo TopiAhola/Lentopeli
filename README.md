@@ -11,7 +11,7 @@ Laskee kahden kentän välisen etäisyyden. Syöte on kenttien ident-koodit. Ant
 
 def random_location(): Antaa satunnaisen kentan ident-koodin
 
-### Valikko funktiot
+##### Valikko funktiot
 def valikko(): Näyttää valikon, joka sisältää muita funktioita. Toimii numeroilla.
 
 #### Tietokanta

@@ -3,7 +3,8 @@
 ###Funktiot:
 
 def distance( origin, destination ):
-# Laskee kahden kentän välisen etäisyyden. Syöte on kenttien ident-koodit. Antaa tuloksen kilometreinä kokonaislukuna.
+Laskee kahden kentän välisen etäisyyden. Syöte on kenttien ident-koodit. Antaa tuloksen kilometreinä kokonaislukuna.
+
 
 
 

@@ -17,7 +17,7 @@ Laskee kahden kentän välisen etäisyyden. Syöte on kenttien ident-koodit. Ant
 
 ### Tietokanta
 Tietokantayhteyden nimi on "yhteys":
-    yhteys = mysql.connector.connect(**parametrit)
+    yhteys = mysql.connector.connect(**parametrit) /n
 Kursorin nimi on "kursori":
     kursori = yhteys.cursor()
 

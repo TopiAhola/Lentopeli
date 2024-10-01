@@ -3,7 +3,8 @@
 ###Funktiot:
 
 def distance( origin, destination ):
-Ottaa kahden lentokentän ident-koodit ja antaa etäisyyden kilometreinä.
+# Laskee kahden kentän välisen etäisyyden. Syöte on kenttien ident-koodit. Antaa tuloksen kilometreinä kokonaislukuna.
+
 
 
 

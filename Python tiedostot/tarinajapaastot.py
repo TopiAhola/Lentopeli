@@ -4,7 +4,7 @@ def alkufunktio():
     print("Tavoitteesi on päästä kaikkiin viiteen maahan, joissa pelataan jalkapallo-otteluita.")
     print("Aloitat seikkailusi yhdestä Euroopan maasta ja saat 1500 € sponsorirahaa matkallesi.")
     print("Valitse yksi kolmesta lähimmistä lentokentästä ja tee valintoja, jotka vaikuttavat päästöihisi ja kuluihisi.")
-    print("Kun saavut uuteen maahan ja osallistut jalkapallo-otteluun, saat palkkion kunniaosoituksena.")
+    print("Kun saavut uuteen maahan saat palkkion kunniaosoituksena.")
     print("Kunniaosoituksen määrä riippuu kunkin valtion varallisuudesta (maan BKT).")
     
     print("\n--- Lentojen hinnat ja päästöt ---")

@@ -35,10 +35,24 @@ def get_money(game_id, game_location):
     gdp_bonus = int(3 * gdp)
     money1 = sql_money[0][0]
     money2 = int(money1 +gdp_bonus)
-    print(f"Ansaitset {gdp_bonus}€ lisää rahaa.")
 
+    #Tähän voi laittaa paremman selityksen mistä rahat tuli, jos haluaa.
+    print(f"Ansaitset {gdp_bonus}€ lisää rahaa.")
+    #Päivitetään pelaajan rahat
     sql2 = f"UPDATE game SET money = '{money2}' WHERE game.id = '{game_id}'"
     kursori.execute(sql2)
+    yhteys.commit()
+
+    #Haetaan pelaajan ansiot
+    sql3 = f"SELECT money_gained FROM game WHERE game.id = '{game_id}' "
+    kursori.execute(sql3)
+    sql_gained = kursori.fetchall()
+    gained = sql_gained[0][0]
+    money_gained = int(gained +gdp_bonus)
+
+
+    sql4 = f"UPDATE game SET money_gained = '{money_gained}' WHERE game.id = '{game_id}'"
+    kursori.execute(sql4)
     yhteys.commit()
 
 
@@ -314,9 +328,6 @@ def new_game():
     # Luo pelaajan ja tavoitteet ja syöttää ne tietokantaan.
     # Palauttaa pelaajan game_id tietokannasta.
 
-
-
-
     name = input("Pelaajan nimi: ")
     location = random_location()
     money = 1500
@@ -357,6 +368,7 @@ def new_game():
 
 def load_game():
     #Näyttää edelliset pelit ja antaa pelaajan valita game_id numeron
+    #Jos pelaaja antaa tyhjän syötteen aloittaa new_game funktion.
 
     sql = f"SELECT game.id, game.name, kentat.name, kentat.country_fi FROM game LEFT JOIN kentat ON kentat.ident = game.location"
     kursori.execute(sql)
@@ -376,7 +388,7 @@ def load_game():
 
 def goal_reached(game_id):
     #Hakee saavutettujen tavoitteiden totuusarvot tietokannasta.
-    #Palauttaa True jos kaikki arvot != 0
+    #Palauttaa True jos kaikki arvot != 0, palauttaa False jos yksikin arvo on 0.
     goal_bool = False
 
 
@@ -396,7 +408,8 @@ def goal_reached(game_id):
     return goal_bool
 
 def game_values(game_id):
-    #Ottaa game:id ja palauttaa game taulun tiedot listana.
+    #Ottaa game:id ja palauttaa game taulun kaikki arvot listana.
+    #Käytetään tietojen lataamiseen uudelleen jos on tehty muutoksia tietokantaan.
 
     values = []
 
@@ -412,8 +425,7 @@ def game_values(game_id):
     return values
 
 def goal_reach_list(game_id):
-
-    # Kertoo pelaajan saavutetut tavoitteet listana.
+    # Palauttaa pelaajan saavuttamat tavoitteet listana. end_game funktiota varten.
 
     sql = f" SELECT kentat.name, kentat.country_fi FROM kentat RIGHT JOIN goal ON goal.ident = kentat.ident WHERE goal.game_id = '{game_id}' AND goal.reached = '1' "
     kursori.execute(sql)
@@ -427,7 +439,7 @@ def goal_reach_list(game_id):
 
 
 def show_goals(game_id):
-    #Kertoo pelaajan tavoitteet ja missä on käynyt.
+    #Tulostaa pelaajan jäljellä olevat tavoitteet.
 
     sql = f" SELECT kentat.name, kentat.country_fi FROM kentat RIGHT JOIN goal ON goal.ident = kentat.ident WHERE goal.game_id = '{game_id}' AND goal.reached = '0' "
     kursori.execute(sql)
@@ -441,7 +453,7 @@ def show_goals(game_id):
         print(f"{tuple[0]}, {tuple[1]}")
 
 def show_location(game_id):
-    #Kertoo pelaajan sijainnin. Lentokenttä ja maa.
+    #Tulostaa pelaajan sijainnin: Lentokenttä ja maa.
 
     sql = f" SELECT kentat.name, kentat.country_fi FROM kentat RIGHT JOIN game ON game.location = kentat.ident WHERE game.id = '{game_id}'  "
     kursori.execute(sql)
@@ -468,12 +480,6 @@ yhteys = mysql.connector.connect(**parametrit)
 kursori = yhteys.cursor()
 
 
-
-
-#game_id, game_name, game_location, game_money, game_co2, game_money_gained, game_money_spent, game_distance, game_flights
-
-
-
 #Peli alkaa
 
 # Luodaan uusi peli tai ladataan vanha: tämä määrittää game_id:n
@@ -484,11 +490,12 @@ if game_type == "2":
 else:
     game_id = new_game()
 
-#Haetaan arvot tietokannasta game_id perusteella joka saadaan new_ tai load_game funktiosta:
-game_id, game_name, game_location, game_money, game_co2, game_money_gained, game_money_spent, game_distance, game_flights = game_values(game_id)
 
 #Toistorakenne kunnes peli voitettu:
 while goal_reached(game_id) != True:
+
+    # Haetaan arvot tietokannasta game_id perusteella
+    # #game_id, game_name, game_location, game_money, game_co2, game_money_gained, game_money_spent, game_distance, game_flights
 
     game_id, game_name, game_location, game_money, game_co2, game_money_gained, game_money_spent, game_distance, game_flights = game_values(game_id)
 
@@ -503,6 +510,8 @@ while goal_reached(game_id) != True:
 
     #Näytetään pelaajan raha ja päästöt
     print(f"Sinulla on {game_money}€ rahaa. Hiilipäästösi ovat {game_co2}kg.")
+    #Hidastetaan tulostetta
+    input("\nPaina enter jatkaaksesi...")
 
     #Haetaan lentoreitit pelaajan sijainnista. 4 kenttaa:
     kentta1, kentta2, kentta3, kentta4 = get_destinations(game_location)
@@ -531,7 +540,7 @@ while goal_reached(game_id) != True:
 
     #Saavutaan määränpäähän. Saadaan mahdollisesti rahaa.
     visit_destination(game_location, game_id)
-    input("Paina enter jatkaaksesi...")
+    input("\nPaina enter jatkaaksesi...")
 
 
 #Pelaaja voitta pelin!

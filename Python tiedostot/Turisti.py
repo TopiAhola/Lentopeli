@@ -16,7 +16,6 @@ def end_game(game_id):
     print(f"Ansaitsit {game_money_gained:.0f}€. Kulutit {game_money_spent:.0f}€. Sinulle jäi {game_money:.0f}€ rahaa.")
 
 
-
 def get_money(game_id, game_location):
 # Antaa pelaajalle lisää rahaa. Voisi myös tulostaa jonkin selityksen mistä raha tulee.
 

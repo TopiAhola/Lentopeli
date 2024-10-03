@@ -18,6 +18,3 @@ def valikko():
     #Virheellinen valinta
     else:
         print("Virheellinen valinta")
-
-while True:
-    valikko()

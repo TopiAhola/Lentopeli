@@ -17,10 +17,6 @@ def end_game(game_id):
 
 
 
-
-
-
-
 def get_money(game_id, game_location):
 # Antaa pelaajalle lisää rahaa. Voisi myös tulostaa jonkin selityksen mistä raha tulee.
 

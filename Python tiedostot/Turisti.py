@@ -57,7 +57,7 @@ def get_money(game_id, game_location):
 
 
 def visit_destination(game_location, game_id):
-#Tarkistaa onko pelaaja käynyt kohteessa. Muokkaa tietokantaan käydyt kentät.
+#Tarkistaa onko pelaaja käynyt kohteessa. Muokkaa tietokantaan visited ja goal taulut.
 
     #Tarkistetaan onko kentta tavoite:
     sql1 = f" SELECT * from goal WHERE game_id = '{game_id}'  "
@@ -127,6 +127,7 @@ def fly(selected_flight, game_id):
 
 
 def select_flight(flights):
+    #Tulostaa tarjolla olevat lennot ja ottaa pelaajalta syötteen lennon valinta.
     print(f"\nTarjolla on seuraavat lennot: ")
     n = 1
     print("\nVähäpäästöiset lennot: ")
@@ -148,9 +149,9 @@ def select_flight(flights):
 
 
 def get_flights(game_location, kentta1, kentta2, kentta3, kentta4):
-    # Palauttaa 3 listaa tupleja lennoista jotka ovat tarjolla.
+    # Palauttaa listan tupleja lennoista jotka ovat tarjolla.
     # tuple =(id, destination, distance, cost, co2)
-    # vähäpäästöinen luokka on flights[0]-[3]
+    # vähäpäästöinen luokka on flights[0:3], keskipäästöinen on [4:8], suuri on [8:12]
 
     flights = []
 
@@ -240,7 +241,7 @@ def check_money(game_money, kentta1_dist, kentta2_dist, kentta3_dist, kentta4_di
         exit()
 
 def get_name_country(ident):
-    #hakee kentän nimen identin perusteella. Tämä on vähän turha.
+    #Ottaa identin ja palauttaa kentän nimen ja maan nimen.
 
     sql = f"SELECT name, country_fi FROM kentat WHERE ident = '{ident}'  "
     kursori.execute(sql)

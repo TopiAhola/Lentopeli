@@ -529,10 +529,15 @@ while goal_reached(game_id) != True:
     flights = get_flights(game_location, kentta1, kentta2, kentta3, kentta4)
     #flights =(destination, name, country, distance, cost, co2)
 
+    # Tähän väliin voitaisiin sijoittaa funktio joka hakee ennalta määriteltyjä lentoja Islantiin ja muihin ohgelmakohtiin.
+
+    # Select_flights pitää kirjoittaa uudestaan näyttämään Islannin lennot. Ja sallia pelaajan valita niitä.
+
     #Valitaan lento 1-12:
     selected_flight = select_flight(flights)
 
-    #Lennetään! Pelaajan tiedot muuttuvat
+    #Lennetään! Pelaajan tiedot muuttuvat. Tämä funktio ottaa lennon tiedot selected_flight = (destination, name, country, distance, cost, co2)
+    #Ei tarvitse kirjoittaa uudestaan.
     fly(selected_flight, game_id)
 
     # Arvot muuttuneet joten pitää hakea uudestaan

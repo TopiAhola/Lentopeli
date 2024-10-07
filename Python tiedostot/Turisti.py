@@ -550,3 +550,4 @@ while goal_reached(game_id) != True:
 
 #Pelaaja voitta pelin!
 end_game(game_id)
+

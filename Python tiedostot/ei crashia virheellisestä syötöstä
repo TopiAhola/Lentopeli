@@ -1,0 +1,26 @@
+def select_flight(flights):
+    print(f"\nTarjolla on seuraavat lennot: ")
+    n = 1
+    print("\nVähäpäästöiset lennot: ")
+    for tuple in flights[0:4]:
+        print(f"{n}: {tuple[1]}, {tuple[2]}, etäisyys {tuple[3]}km, hinta {tuple[4]}€, päästöt {tuple[5]}kg")
+        n = n + 1
+    print("\nKeskipäästöiset lennot: ")
+    for tuple in flights[4:8]:
+        print(f"{n}: {tuple[1]}, {tuple[2]}, etäisyys {tuple[3]}km, hinta {tuple[4]}€, päästöt {tuple[5]}kg")
+        n = n + 1
+    print("\nSuuripäästöiset lennot: ")
+    for tuple in flights[8:12]:
+        print(f"{n}: {tuple[1]}, {tuple[2]}, etäisyys {tuple[3]}km, hinta {tuple[4]}€, päästöt {tuple[5]}kg")
+        n = n + 1
+
+    while True:
+        try:
+            selection = int(input("\nValitse lento 1-12:\n"))
+            if 1 <= selection <= 12:
+                selected_flight = flights[selection - 1]
+                return selected_flight
+            else:
+                print("Valitse numero väliltä 1-12.")
+        except ValueError:
+            print("Virheellinen syöte, syötä numero 1-12.")

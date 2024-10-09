@@ -22,8 +22,7 @@ def alkufunktio():
 
     print("Pelin tavoitteena on käydä kaikissa viidessä maassa mahdollisimman pienillä päästöillä.")
     print("Mikäli rahasi loppuvat, peli päättyy.")
-    print(
-        "Voit voittaa pelin ja päästä kunnioitustauluun, jos onnistut saavuttamaan kaikki viisi kohdetta vähillä päästöillä!")
+
 
 def end_game(game_id):
 #Pelaaja voittaa pelin. Tulostetaan lopputiedot.

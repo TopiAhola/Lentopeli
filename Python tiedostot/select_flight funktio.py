@@ -29,7 +29,7 @@ def select_flight(flights):
             elif class_selection == 2:
                 selected_flight = flights[4:8][selection - 1]
             elif class_selection == 3:
-                selected_flight = flights[8:12][selectio n - 1]
+                selected_flight = flights[8:12][selection - 1]
             else:
                 print("Valitse numero väliltä 1-3.")
                 continue

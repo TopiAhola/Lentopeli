@@ -384,3 +384,9 @@ CREATE TABLE visited
     KEY       game_id (game_id),
     KEY       ident (ident)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--- Muokkaus 6 poistetaan islanti ja färsaaret
+DELETE FROM kentat WHERE iso_country = 'FO';
+DELETE FROM kentat WHERE iso_country = 'IS';
+

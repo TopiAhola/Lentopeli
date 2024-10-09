@@ -520,16 +520,18 @@ while goal_reached(game_id) != True:
     #Näytetään pelaajan sijainti
     show_location(game_id)
 
-    #Näytetään pelaajan raha ja päästöt
-    print(f"Sinulla on {game_money}€ rahaa. Hiilipäästösi ovat {game_co2}kg.")
-    #Hidastetaan tulostetta
-    input("\nPaina enter jatkaaksesi...")
-
     #Haetaan lentoreitit pelaajan sijainnista. 4 kenttaa:
     kentta1, kentta2, kentta3, kentta4 = get_destinations(game_location)
 
     # Tarkistetaan onko pelaajalla rahaa lentää kohteisin. Jos ei, peli loppuu!
     check_money(game_money, game_location, kentta1, kentta2, kentta3, kentta4)
+
+
+    #Näytetään pelaajan raha ja päästöt
+    print(f"Sinulla on {game_money}€ rahaa. Hiilipäästösi ovat {game_co2}kg.")
+    #Hidastetaan tulostetta
+    input("\nPaina enter jatkaaksesi...")
+
 
     #Luodaan lennot joilla kohteisiin lennetään.
     flights = get_flights(game_location, kentta1, kentta2, kentta3, kentta4)

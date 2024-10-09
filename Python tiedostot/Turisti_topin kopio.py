@@ -65,6 +65,12 @@ def visit_destination(game_location, game_id):
     goal_list = kursori.fetchall()
     #print(goal_list)
 
+    # Tulostetaan tieto siitä, minne pelaaja on saapunut:
+
+    airportname, country = get_name_country(game_location)
+    print(f"\nSaavut lentokentälle {airportname}, {country}.")
+
+
     #Käydään tuplet läpi ja jos löytyy tavoite jossa reached == 0 merkitään se saavutetuksi.
     for tuple in goal_list:
         #print(tuple[2])

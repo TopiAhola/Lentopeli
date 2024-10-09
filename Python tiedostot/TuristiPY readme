@@ -50,9 +50,8 @@ def get_name_country(ident):
     #Ottaa identin ja palauttaa kentän nimen ja maan nimen.
 
 
-def check_money(game_money, kentta1_dist, kentta2_dist, kentta3_dist, kentta4_dist):
-    #Tarkistaa onko pelaajalla rahaa lentää kentille halvimmalla lipulla.
-    #Tämä on yksinkertainen versio. Parempi antaa pelaajan statsit ja ei tee pyöristysvirheitä.
+def check_money(game_money, game_location, kentta1, kentta2, kentta3, kentta4):
+    #Tarkistaa onko pelaajalla rahaa lentää kentille halvimmalla lipulla. Jos ei, pelaaja häviää pelin!
 
 
 def dist(origin, destination):

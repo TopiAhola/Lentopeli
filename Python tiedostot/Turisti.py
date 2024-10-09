@@ -58,12 +58,19 @@ def get_money(game_id, game_location):
 
 def visit_destination(game_location, game_id):
 #Tarkistaa onko pelaaja käynyt kohteessa. Muokkaa tietokantaan visited ja goal taulut.
+#Tulostaa viestin sillä perusteella onko pelaaja käynyt maassa aiemmin.
 
     #Tarkistetaan onko kentta tavoite:
     sql1 = f" SELECT * from goal WHERE game_id = '{game_id}'  "
     kursori.execute(sql1)
     goal_list = kursori.fetchall()
     #print(goal_list)
+
+    #Tulostetaan tieto siitä, minne pelaaja on saapunut:
+
+    airportname, country = get_name_country(game_location)
+    print(f"\nSaavut lentokentälle {airportname}, {country}.")
+
 
     #Käydään tuplet läpi ja jos löytyy tavoite jossa reached == 0 merkitään se saavutetuksi.
     for tuple in goal_list:

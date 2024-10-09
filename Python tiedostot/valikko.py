@@ -1,18 +1,14 @@
 #Valikko funktio
 def valikko():
-    print("\n1. Lentokentät \n2. Tavoite lentokentät \n3. Pelin säännöt")
+    print("\n1. Lentokentät \n2. Pelin säännöt")
     valinta = input("Syötä numero: \n")
 
     # Lentokentät
     if valinta == "1":
-        print("Lentokentät funktio")
-    
-    #Tavoite lentokentät
-    elif valinta == "2":
-        print("Tavoite lentokentät funktio")
+        select_flight(flights)
 
     #Pelin säännöt
-    elif valinta == "3":
+    elif valinta == "2":
         print("Säännöt funktio")
 
     #Virheellinen valinta

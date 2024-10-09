@@ -566,8 +566,7 @@ while goal_reached(game_id) != True:
     #flights =(destination, name, country, distance, cost, co2)
 
     # Tähän väliin voitaisiin sijoittaa funktio joka hakee ennalta määriteltyjä lentoja Islantiin ja muihin ohgelmakohtiin.
-    print("degug...")
-    print(flights)
+
 
     # Select_flights pitää kirjoittaa uudestaan näyttämään Islannin lennot. Ja sallia pelaajan valita niitä.
     #Valitaan lento 1-12:

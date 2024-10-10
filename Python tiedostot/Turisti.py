@@ -1,8 +1,8 @@
 def alkufunktio():
-    print("--- Tervetuloa Urheilijan Jalkapalloseikkailu Euroopassa! ---")
+    print("--- Tervetuloa Eurooppalainen turisti peliin! ---")
     print(
-        "\nTässä pelissä sinä olet jalkapalloilija, joka osallistuu kansainvälisiin turnauksiin viidessä eri Euroopan maassa.")
-    print("Tavoitteesi on päästä kaikkiin viiteen maahan, joissa pelataan jalkapallo-otteluita.")
+        "\nTässä pelissä sinä olet turisti, joka seikkailee viidessä eri Euroopan maassa.")
+    print("Tavoitteesi on päästä kaikkiin viiteen maahan.")
     print("Aloitat seikkailusi yhdestä Euroopan maasta ja saat 1500 € sponsorirahaa matkallesi.")
     print(
         "Valitse yksi kolmesta lähimmistä lentokentästä ja tee valintoja, jotka vaikuttavat päästöihisi ja kuluihisi.")

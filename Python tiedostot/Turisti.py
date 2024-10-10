@@ -160,7 +160,6 @@ def fly(selected_flight, game_id):
 
 
 def select_flight(flights):
-    #Tulostaa tarjolla olevat lennot ja ottaa pelaajalta syötteen lennon valinta.
     print(f"\nTarjolla on seuraavat lennot: ")
     n = 1
     print("\nVähäpäästöiset lennot: ")
@@ -176,9 +175,16 @@ def select_flight(flights):
         print(f"{n}: {tuple[1]}, {tuple[2]}, etäisyys {tuple[3]}km, hinta {tuple[4]}€, päästöt {tuple[5]}kg")
         n = n + 1
 
-    selection = int(input("\nValitse lento 1-12:\n"))
-    selected_flight = flights[selection - 1]
-    return selected_flight
+    while True:
+        try:
+            selection = int(input("\nValitse lento 1-12:\n"))
+            if 1 <= selection <= 12:
+                selected_flight = flights[selection - 1]
+                return selected_flight
+            else:
+                print("Valitse numero väliltä 1-12.")
+        except ValueError:
+            print("Virheellinen syöte, syötä numero 1-12.")
 
 
 def get_flights(game_location, kentta1, kentta2, kentta3, kentta4):
@@ -367,7 +373,7 @@ def new_game():
     # Luo pelaajan ja tavoitteet ja syöttää ne tietokantaan.
     # Palauttaa pelaajan game_id tietokannasta.
 
-    name = input("Pelaajan nimi: ")
+    name = input(f"\nAloitetaan uusi peli. \nPelaajan nimi: ")
     location = random_location()
     money = 1500
     co2 = 0
@@ -556,6 +562,7 @@ while goal_reached(game_id) != True:
 
     #Näytetään pelaajan raha ja päästöt
     print(f"Sinulla on {game_money}€ rahaa. Hiilipäästösi ovat {game_co2}kg.")
+
     #Hidastetaan tulostetta
     input("\nPaina enter jatkaaksesi...")
 

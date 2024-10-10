@@ -419,13 +419,11 @@ def load_game():
     kursori.execute(sql)
     sql_list = kursori.fetchall()
 
-    games_available = []
+
 
     print("\nTallennetut pelit:\nNumero, Nimi, Lentokenttä, Maa")
     for game in sql_list:
         print(f"{game[0]}, {game[1]}, {game[2]}, {game[3]}")
-        games_available.append(game[0])
-
 
 
     game_id = input("\nAnna haluamasi pelin numero: ")

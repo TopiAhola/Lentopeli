@@ -426,17 +426,15 @@ def load_game():
         print(f"{game[0]}, {game[1]}, {game[2]}, {game[3]}")
         games_available.append(game[0])
 
-    while True:
 
-        game_id = input("\nAnna haluamasi pelin numero: ")
 
-        if game_id == "":
-            game_id = new_game()
-            return game_id
+    game_id = input("\nAnna haluamasi pelin numero: ")
 
-        if game_id not in games_available:
-            print("Peliä ei löydy. Voit antaa tyhjän aloittaaksesi uuden pelin. ")
+    if game_id == "":
+        game_id = new_game()
 
+
+    return game_id
 
 def goal_reached(game_id):
     #Hakee saavutettujen tavoitteiden totuusarvot tietokannasta.

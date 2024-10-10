@@ -390,3 +390,6 @@ CREATE TABLE visited
 DELETE FROM kentat WHERE iso_country = 'FO';
 DELETE FROM kentat WHERE iso_country = 'IS';
 
+--- Muokkaus 7 korjataan pristinan nimi
+
+UPDATE kentat SET name = "Pristina Adem Jashari International" WHERE iso_country = "xk";

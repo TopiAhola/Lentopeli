@@ -419,16 +419,23 @@ def load_game():
     kursori.execute(sql)
     sql_list = kursori.fetchall()
 
+    games_available = []
+
     print("\nTallennetut pelit:\nNumero, Nimi, Lentokenttä, Maa")
     for game in sql_list:
         print(f"{game[0]}, {game[1]}, {game[2]}, {game[3]}")
+        games_available.append(game[0])
 
-    game_id = input("\nAnna haluamasi pelin numero: ")
-    if game_id == "":
-        game_id = new_game()
+    while True:
 
+        game_id = input("\nAnna haluamasi pelin numero: ")
 
-    return game_id
+        if game_id == "":
+            game_id = new_game()
+            return game_id
+
+        if game_id not in games_available:
+            print("Peliä ei löydy. Voit antaa tyhjän aloittaaksesi uuden pelin. ")
 
 
 def goal_reached(game_id):

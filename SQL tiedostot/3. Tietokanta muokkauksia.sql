@@ -393,3 +393,9 @@ DELETE FROM kentat WHERE iso_country = 'IS';
 --- Muokkaus 7 korjataan pristinan nimi
 
 UPDATE kentat SET name = "Pristina Adem Jashari International" WHERE iso_country = "xk";
+UPDATE kentat SET name = "Henri Coanda International Airport" WHERE iso_country = "RO";
+UPDATE kentat SET name = "Humberto Delgado Airport" WHERE iso_country = "PT";
+UPDATE kentat SET name = "Chisinau International Airport" WHERE iso_country = "MD";
+
+
+

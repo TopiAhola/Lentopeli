@@ -1,3 +1,29 @@
+def alkufunktio():
+    print("--- Tervetuloa Eurooppalainen turisti peliin! ---")
+    print(
+        "\nTässä pelissä sinä olet turisti, joka seikkailee viidessä eri Euroopan maassa.")
+    print("Tavoitteesi on päästä kaikkiin viiteen maahan.")
+    print("Aloitat seikkailusi yhdestä Euroopan maasta ja saat 1500 € sponsorirahaa matkallesi.")
+    print(
+        "Valitse yksi kolmesta lähimmistä lentokentästä ja tee valintoja, jotka vaikuttavat päästöihisi ja kuluihisi.")
+    print("Kun saavut uuteen maahan saat palkkion kunniaosoituksena.")
+    print("Kunniaosoituksen määrä riippuu kunkin valtion varallisuudesta (maan BKT).")
+
+    print("\n--- Lentojen hinnat ja päästöt ---")
+    print("1. Vähänpäästöinen luokka:")
+    print("   - Päästöt: 100 g CO2 per kilometri")
+    print("   - Hinta: 0,3 € per kilometri")
+    print("2. Keskipäästöinen luokka:")
+    print("   - Päästöt: 200 g CO2 per kilometri")
+    print("   - Hinta: 0,2 € per kilometri")
+    print("3. Suurpäästöinen luokka:")
+    print("   - Päästöt: 300 g CO2 per kilometri")
+    print("   - Hinta: 0,1 € per kilometri\n")
+
+    print("Pelin tavoitteena on käydä kaikissa viidessä maassa mahdollisimman pienillä päästöillä.")
+    print("Mikäli rahasi loppuvat, peli päättyy.")
+
+
 def end_game(game_id):
 #Pelaaja voittaa pelin. Tulostetaan lopputiedot.
     game_id, game_name, game_location, game_money, game_co2, game_money_gained, game_money_spent, game_distance, game_flights = game_values(game_id)
@@ -58,6 +84,7 @@ def get_money(game_id, game_location):
 
 def visit_destination(game_location, game_id):
 #Tarkistaa onko pelaaja käynyt kohteessa. Muokkaa tietokantaan visited ja goal taulut.
+#Tulostaa viestin sillä perusteella onko pelaaja käynyt maassa aiemmin.
 
     #Tarkistetaan onko kentta tavoite:
     sql1 = f" SELECT * from goal WHERE game_id = '{game_id}'  "
@@ -65,7 +92,7 @@ def visit_destination(game_location, game_id):
     goal_list = kursori.fetchall()
     #print(goal_list)
 
-    # Tulostetaan tieto siitä, minne pelaaja on saapunut:
+    #Tulostetaan tieto siitä, minne pelaaja on saapunut:
 
     airportname, country = get_name_country(game_location)
     print(f"\nSaavut lentokentälle {airportname}, {country}.")
@@ -133,24 +160,45 @@ def fly(selected_flight, game_id):
 
 
 def select_flight(flights):
-    #Tulostaa tarjolla olevat lennot ja ottaa pelaajalta syötteen lennon valinta.
-    print(f"\nTarjolla on seuraavat lennot: ")
-    n = 1
-    print("\nVähäpäästöiset lennot: ")
-    for tuple in flights[0:4]:
-        print(f"{n}: {tuple[1]}, {tuple[2]}, etäisyys {tuple[3]}km, hinta {tuple[4]}€, päästöt {tuple[5]}kg")
-        n = n + 1
-    print("\nKeskipäästöiset lennot: ")
-    for tuple in flights[4:8]:
-        print(f"{n}: {tuple[1]}, {tuple[2]}, etäisyys {tuple[3]}km, hinta {tuple[4]}€, päästöt {tuple[5]}kg")
-        n = n + 1
-    print("\nSuuripäästöiset lennot: ")
-    for tuple in flights[8:12]:
-        print(f"{n}: {tuple[1]}, {tuple[2]}, etäisyys {tuple[3]}km, hinta {tuple[4]}€, päästöt {tuple[5]}kg")
-        n = n + 1
+    # Tulostaa tarjolla olevat kentät ja ottaa pelaajalta syötteen lentoluokan valinta.
+    print("\nTarjolla on seuraavat kentät:")
+    for i, flight in enumerate(flights[:4], 1):
+        print(f"{i}: {flight[1]}, {flight[2]}, etäisyys {flight[3]} km")
 
-    selection = int(input("\nValitse lento 1-12:\n"))
-    selected_flight = flights[selection - 1]
+    while True:
+        try:
+            selection = int(input("\nValitse lento (1-4):\n"))
+            if 1 <= selection <= 4:
+                selected_flight = flights[selection - 1]
+                break
+            else:
+                print("Valitse numero välillä 1-4.")
+        except ValueError:
+            print("Virheellinen syöte. Anna numero väliltä 1-4.")
+
+    # Valitaan lentoluokka
+    while True:
+        try:
+            print("\nValitse lentoluokka:")
+            print("1: Vähäpäästöiset lennot")
+            print("2: Keskipäästöiset lennot")
+            print("3: Suurpäästöiset lennot")
+            class_selection = int(input("\nAnna numero (1-3):\n"))
+
+            if class_selection == 1:
+                selected_flight = flights[0:4][selection - 1]
+            elif class_selection == 2:
+                selected_flight = flights[4:8][selection - 1]
+            elif class_selection == 3:
+                selected_flight = flights[8:12][selection - 1]
+            else:
+                print("Valitse numero väliltä 1-3.")
+                continue
+
+            break
+        except ValueError:
+            print("Virheellinen syöte. Anna numero väliltä 1-3.")
+
     return selected_flight
 
 
@@ -340,7 +388,7 @@ def new_game():
     # Luo pelaajan ja tavoitteet ja syöttää ne tietokantaan.
     # Palauttaa pelaajan game_id tietokannasta.
 
-    name = input("Pelaajan nimi: ")
+    name = input(f"\nAloitetaan uusi peli. \nPelaajan nimi: ")
     location = random_location()
     money = 1500
     co2 = 0
@@ -386,16 +434,46 @@ def load_game():
     kursori.execute(sql)
     sql_list = kursori.fetchall()
 
+    games_available = []
+
     print("\nTallennetut pelit:\nNumero, Nimi, Lentokenttä, Maa")
     for game in sql_list:
         print(f"{game[0]}, {game[1]}, {game[2]}, {game[3]}")
+        games_available.append(int(game[0]))
 
-    game_id = input("\nAnna haluamasi pelin numero: ")
-    if game_id == "":
-        game_id = new_game()
+    while True:
+        try:
+            game_id = int(input("\nAnna haluamasi pelin numero: "))
+            #print(games_available)
+            if game_id in games_available:
 
+                return game_id
+
+            elif game_id == "":
+                game_id = new_game()
+                return game_id
+
+            else:
+                print("Peliä ei löydy. Voit antaa tyhjän aloittaaksesi uuden pelin.")
+
+        except(ValueError):
+            print("Virheellinen syöte.")
+
+'''
+    while True:
+        game_id = input("\nAnna haluamasi pelin numero: ")
+        print(games_available)
+
+        if game_id == "":
+            game_id = new_game()
+            break
+
+        if game_id in games_available:
+            break
 
     return game_id
+'''
+
 
 
 def goal_reached(game_id):
@@ -496,6 +574,7 @@ kursori = yhteys.cursor()
 
 # Luodaan uusi peli tai ladataan vanha: tämä määrittää game_id:n
 game_type = input("Valitse 1 tai 2:\n1 Uusi peli\n2 Lataa peli\n")
+alkufunktio()
 if game_type == "2":
     game_id = load_game()
 
@@ -526,9 +605,9 @@ while goal_reached(game_id) != True:
     # Tarkistetaan onko pelaajalla rahaa lentää kohteisin. Jos ei, peli loppuu!
     check_money(game_money, game_location, kentta1, kentta2, kentta3, kentta4)
 
-
     #Näytetään pelaajan raha ja päästöt
     print(f"Sinulla on {game_money}€ rahaa. Hiilipäästösi ovat {game_co2}kg.")
+
     #Hidastetaan tulostetta
     input("\nPaina enter jatkaaksesi...")
 
@@ -538,8 +617,7 @@ while goal_reached(game_id) != True:
     #flights =(destination, name, country, distance, cost, co2)
 
     # Tähän väliin voitaisiin sijoittaa funktio joka hakee ennalta määriteltyjä lentoja Islantiin ja muihin ohgelmakohtiin.
-    print("degug...")
-    print(flights)
+
 
     # Select_flights pitää kirjoittaa uudestaan näyttämään Islannin lennot. Ja sallia pelaajan valita niitä.
     #Valitaan lento 1-12:

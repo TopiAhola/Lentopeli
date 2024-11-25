@@ -1,0 +1,46 @@
+Ongelmia/kysymyksiä:
+-Miten selain aloittaa uuden pelin? Python serverin pitää ottaa vastaan komentoja jolla peli laitetaan oikeaan tilaan
+tai sitten selain käynnistetään joka kerta uudestaan kun peli aloitetaan.
+
+-Jotta lennot voi näyttää selaimen kartalla ne pitää joko ohjelmoida Javascriptiin ja selain palauttaa tiedon siitä
+mitkä näytetään tai selain palauttaa tietorakenteen joka sisältää kaikki lennon tiedot  ja Javascript luo lennot
+kartalle dynaamisesti.
+
+-Yksinkertaisin versio pelistä olisi vain tulostaa Python konsolin tekstit HTML-sivulle ja palauttaa vastaus stringinä serverille..
+
+-Load game saattaa vaatia oman tietorakenteensa joka listaa ladattavissa olevat pelit...
+
+-Laitetaanko sivulle interaktiivinen kartta? Kartta pitäisi vähintään saada näyttämään lentokentät.
+
+Muutokset pythoniin:
+-new_game funktio pitää korvata rakenteella joka ottaa pelaajan nimen clientiltä.
+-Kaikki 'paina enter jatkaaksesi'-kohdat poistetaan.
+-Kaikki tietojen tulostukset pitää syöttää json-tietorakenteeseen joka palautetaan clientille.
+-Lennot tarvitsevat joko id:n tai kokonaisen tietorakenteen joka palautetaan
+-check_money funktio ei toimi koska se keskeyttää ohjelman exit() komennolla mikä kaataa serverin
+
+Javascript client:
+0.Lähettää pelaajan nimen uutta peliä varten
+1.Vastaanottaa serverin tulosteet pelin tilasta
+2.Näyttää pelin tilan ja lentovaihtoehdot pelaajalle
+3.Lähettää pelaajan valinnan takaisin serverille
+
+
+Esimerkki clientin lähettämästä tietorakenteesta:
+
+input { "selected_class":"x", "selected_destination:"y", "game_mode":"continuegame/newgame/loadgame"}
+
+
+Esimerkki selaimen palauttamasta json-tietorakenteesta:
+
+data{ "game_status" : "gameinprogress/gameover/game won"
+      "player" :  {"name":"x", "money":"y", ...},
+
+      "flights_array" : [  {"destination" : "a", "cost":"x" ... },
+                           {"destination" : "b", "cost":"x" ... },
+                           {"destination" : "c", "cost":"x" ... },
+                           {"destination" : "d", "cost":"x" ... }
+                         ]
+
+     }
+

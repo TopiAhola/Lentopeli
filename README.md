@@ -117,3 +117,5 @@ def end_game(game_id):
 
 def goal_reach_list(game_id):
     #Palauttaa pelaajan saavuttamat tavoitteet listana. end_game funktiota varten.
+
+

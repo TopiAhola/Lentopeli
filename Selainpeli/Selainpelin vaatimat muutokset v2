@@ -8,7 +8,8 @@ selain tietää pelin alkaneen.
 mitkä näytetään tai selain palauttaa tietorakenteen joka sisältää kaikki lennon tiedot  ja Javascript luo lennot
 kartalle dynaamisesti.
 
--Yksinkertaisin versio pelistä olisi vain tulostaa Python konsolin tekstit HTML-sivulle ja palauttaa vastaus stringinä serverille..
+-Näyttääkö kartta tai muu elementti missä maissa on käyty?
+
 
 -Load game saattaa vaatia oman tietorakenteensa joka listaa ladattavissa olevat pelit...
 
@@ -20,7 +21,13 @@ Muutokset pythoniin:
 -Kaikki tietojen tulostukset pitää syöttää json-tietorakenteeseen joka palautetaan clientille.
 -Lennot tarvitsevat joko id:n tai kokonaisen tietorakenteen joka palautetaan
 -check_money funktio ei toimi koska se keskeyttää ohjelman exit() komennolla mikä kaataa serverin
--Tarvitaan lisää muuttujia lentokentän ja maan nimelle jotka lähetetään selaimelle: location_name ja location_country
+
+-Tarvitaan lisää muuttujia lentokentän ja maan nimelle jotka lähetetään selaimelle:
+    location_name ja location_country location_lat, location_lon
+-Tarvitaan sijaintitiedot kohteille?
+    destination_lat, destination_lon?
+
+
 
 Javascript client:
 0.Lähettää pelaajan nimen uutta peliä varten
@@ -30,29 +37,33 @@ Javascript client:
 
 
 Esimerkki clientin lähettämästä tietorakenteesta:
-Aloitettaessa uusi peli: { }
+Aloitettaessa uusi peli: {"name":"Xxx" }
 
 Pelatessa: { "selected_class":"x", "selected_destination:"y"}
 
 
 
 Esimerkki selaimen palauttamasta json-tietorakenteesta:
+Aloitettaessa uusi peli: {}
 
+Pelatessa:
  { "game_status" : "gameinprogress/gameover/game won"
-   "name":"x",
+   "name":"Xxx",
    "location_icao":"efhk",
    "location_name":"helsinki",
    "location_country":"Suomi",
+   "location_lat":"60.23"
+   "location_lon":"24.74"
    "money":"1500",
    "co2":"100",
    "money_gained":"20",
    "money_spent":"100",
    "distance":"1000"
 
-   "flights_array" : [{"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
-                      {"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
-                      {"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
-                      {"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
+   "flights_array" : [  {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
+                        {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
+                        {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
+                        {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"}
                      ]
    "goals_array" : [{"goal" : "a", "reached" : "0/1"},
                     {"goal" : "b", "reached" : "0/1"},

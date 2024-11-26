@@ -30,24 +30,25 @@ Javascript client:
 
 Esimerkki clientin lähettämästä tietorakenteesta:
 
-input { "selected_class":"x", "selected_destination:"y", "game_mode":"continuegame/newgame/loadgame"}
+input { "selected_class":"x", "selected_destination:"y"}
+
 
 
 Esimerkki selaimen palauttamasta json-tietorakenteesta:
 
-data { "game_status" : "gameinprogress/gameover/game won"
-       "name":"x",
-       "money":"y",
-       "flights_array" : [  {"destination" : "a", "cost":"x" ... },
-                            {"destination" : "b", "cost":"x" ... },
-                            {"destination" : "c", "cost":"x" ... },
-                            {"destination" : "d", "cost":"x" ... }
-                         ]
-        "goals_array" [ {"goal" : "a", "reached" : "0/1"},
-                        {"goal" : "a", "reached" : "0/1"},
-                        {"goal" : "a", "reached" : "0/1"},
-                        {"goal" : "a", "reached" : "0/1"},
-                        {"goal" : "a", "reached" : "0/1"}
-                        ]
-     }
+ { "game_status" : "gameinprogress/gameover/game won"
+   "name":"x",
+   "money":"y",
+   "flights_array" : [  {"destination" : "a", "cost":"x" ... },
+                        {"destination" : "b", "cost":"x" ... },
+                        {"destination" : "c", "cost":"x" ... },
+                        {"destination" : "d", "cost":"x" ... }
+                     ]
+    "goals_array" [ {"goal" : "a", "reached" : "0/1"},
+                    {"goal" : "a", "reached" : "0/1"},
+                    {"goal" : "a", "reached" : "0/1"},
+                    {"goal" : "a", "reached" : "0/1"},
+                    {"goal" : "a", "reached" : "0/1"}
+                    ]
+ }
 

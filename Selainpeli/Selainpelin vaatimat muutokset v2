@@ -1,6 +1,8 @@
 Ongelmia/kysymyksiä:
 -Miten selain aloittaa uuden pelin? Python serverin pitää ottaa vastaan komentoja jolla peli laitetaan oikeaan tilaan
 tai sitten selain käynnistetään joka kerta uudestaan kun peli aloitetaan.
+Vastaus: Serverillä on erillinen funktio pelin aloittamiseksi joka ottaa pelaajan nimen. Sen varmaan pitää palauttaa joku vastaus että
+selain tietää pelin alkaneen.
 
 -Jotta lennot voi näyttää selaimen kartalla ne pitää joko ohjelmoida Javascriptiin ja selain palauttaa tiedon siitä
 mitkä näytetään tai selain palauttaa tietorakenteen joka sisältää kaikki lennon tiedot  ja Javascript luo lennot
@@ -41,6 +43,11 @@ data { "game_status" : "gameinprogress/gameover/game won"
                             {"destination" : "c", "cost":"x" ... },
                             {"destination" : "d", "cost":"x" ... }
                          ]
-
+        "goals_array" [ {"goal" : "a", "reached" : "0/1"},
+                        {"goal" : "a", "reached" : "0/1"},
+                        {"goal" : "a", "reached" : "0/1"},
+                        {"goal" : "a", "reached" : "0/1"},
+                        {"goal" : "a", "reached" : "0/1"}
+                        ]
      }
 

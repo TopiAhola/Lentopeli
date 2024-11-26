@@ -33,13 +33,13 @@ input { "selected_class":"x", "selected_destination:"y", "game_mode":"continuega
 
 Esimerkki selaimen palauttamasta json-tietorakenteesta:
 
-data{ "game_status" : "gameinprogress/gameover/game won"
-      "player" :  {"name":"x", "money":"y", ...},
-
-      "flights_array" : [  {"destination" : "a", "cost":"x" ... },
-                           {"destination" : "b", "cost":"x" ... },
-                           {"destination" : "c", "cost":"x" ... },
-                           {"destination" : "d", "cost":"x" ... }
+data { "game_status" : "gameinprogress/gameover/game won"
+       "name":"x",
+       "money":"y",
+       "flights_array" : [  {"destination" : "a", "cost":"x" ... },
+                            {"destination" : "b", "cost":"x" ... },
+                            {"destination" : "c", "cost":"x" ... },
+                            {"destination" : "d", "cost":"x" ... }
                          ]
 
      }

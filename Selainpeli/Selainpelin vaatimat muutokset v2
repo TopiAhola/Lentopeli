@@ -71,6 +71,12 @@ Pelatessa:
                     {"goal" : "d", "reached" : "0/1"},
                     {"goal" : "e", "reached" : "0/1"}
                     ]
+   "visited_array" : [ halutaanko käydyt maat näyttää kartalla tai listassa?
+
+   ]
+
+
+
  }
 
 

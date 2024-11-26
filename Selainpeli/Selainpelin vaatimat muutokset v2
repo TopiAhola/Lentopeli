@@ -20,6 +20,7 @@ Muutokset pythoniin:
 -Kaikki tietojen tulostukset pitää syöttää json-tietorakenteeseen joka palautetaan clientille.
 -Lennot tarvitsevat joko id:n tai kokonaisen tietorakenteen joka palautetaan
 -check_money funktio ei toimi koska se keskeyttää ohjelman exit() komennolla mikä kaataa serverin
+-Tarvitaan lisää muuttujia lentokentän ja maan nimelle jotka lähetetään selaimelle: location_name ja location_country
 
 Javascript client:
 0.Lähettää pelaajan nimen uutta peliä varten
@@ -29,8 +30,9 @@ Javascript client:
 
 
 Esimerkki clientin lähettämästä tietorakenteesta:
+Aloitettaessa uusi peli: { }
 
-input { "selected_class":"x", "selected_destination:"y"}
+Pelatessa: { "selected_class":"x", "selected_destination:"y"}
 
 
 
@@ -38,17 +40,27 @@ Esimerkki selaimen palauttamasta json-tietorakenteesta:
 
  { "game_status" : "gameinprogress/gameover/game won"
    "name":"x",
-   "money":"y",
-   "flights_array" : [  {"destination" : "a", "cost":"x" ... },
-                        {"destination" : "b", "cost":"x" ... },
-                        {"destination" : "c", "cost":"x" ... },
-                        {"destination" : "d", "cost":"x" ... }
+   "location_icao":"efhk",
+   "location_name":"helsinki",
+   "location_country":"Suomi",
+   "money":"1500",
+   "co2":"100",
+   "money_gained":"20",
+   "money_spent":"100",
+   "distance":"1000"
+
+   "flights_array" : [{"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
+                      {"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
+                      {"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
+                      {"destination":"a", "cost":"x", "distance":"100", "co2":"50"},
                      ]
-    "goals_array" [ {"goal" : "a", "reached" : "0/1"},
-                    {"goal" : "a", "reached" : "0/1"},
-                    {"goal" : "a", "reached" : "0/1"},
-                    {"goal" : "a", "reached" : "0/1"},
-                    {"goal" : "a", "reached" : "0/1"}
+   "goals_array" : [{"goal" : "a", "reached" : "0/1"},
+                    {"goal" : "b", "reached" : "0/1"},
+                    {"goal" : "c", "reached" : "0/1"},
+                    {"goal" : "d", "reached" : "0/1"},
+                    {"goal" : "e", "reached" : "0/1"}
                     ]
  }
 
+
+## game_id, game_name, game_location, game_money, game_co2, game_money_gained, game_money_spent, game_distance

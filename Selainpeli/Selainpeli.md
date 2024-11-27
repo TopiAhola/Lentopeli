@@ -5,10 +5,10 @@ Sivu sisältää käyttöliittymän joka näyttää pelin tilanteen palvelimen p
 Sivulla on nappuloita joita klikkaamalla pelaaja valitsee lennon.
 <br>
 ### Palvelin - Python
-Palvelin ottaa vastaan pelaajan syötteen ja palauttaa pelin tilanteen json-objektina.
-<br>
+Palvelin ottaa vastaan pelaajan syötteen ja palauttaa pelin tilanteen json-objektina.<br>
+Python koodi käyttää luokkia ja olioita. 
 
-### Tietokanta
+### Tietokanta - MariaDB
 Tietokantayhteyden nimi on "yhteys": <br>
 yhteys = mysql.connector.connect(**parametrit) 
 
@@ -28,11 +28,12 @@ parametrit =
 
 
 
-#### Importit
+#### Python importit
 import mysql.connector <br>
 import random <br>
 from geopy import distance <br>
 import json
 
-#### Funktiot
+#### Python funktiot
+Funktiot tehdään uusiksi
 

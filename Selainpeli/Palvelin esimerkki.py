@@ -1,44 +1,60 @@
-'''
-Toteuta taustapalvelu, joka palauttaa annettua lentokentän ICAO-koodia vastaavan
-lentokentän nimen ja kaupungin JSON-muodossa. Tiedot haetaan opintojaksolla käytetystä
-lentokenttätietokannasta. Esimerkiksi EFHK-koodia vastaava GET-pyyntö annetaan
-muodossa: http://127.0.0.1:3000/kenttä/EFHK.
-Vastauksen on oltava muodossa:
-{"ICAO":"EFHK", "Name":"Helsinki Vantaa Airport", "Municipality":"Helsinki"}.
 
-
-'''
 
 from flask import Flask, request
 import mysql.connector
 
 
 app = Flask(__name__)
-@app.route('/kentta/<icao>')
+@app.route('/newgame/<name>')
+def server_newgame(name):
+    #Alustaa uuden pelin...
+    teksti = f"Uusi peli aloitettu nimellä {name}."
+    vastaus = {"teksti": teksti}
+    return vastaus
 
-def kentta(icao):
-    icao = icao.upper()
-    nimi, kaupunki = sql_request(icao)
-    print(icao)
 
-    vastaus = {"ICAO" : icao,
-               "Name" : nimi,
-               "Municipality" : kaupunki
-               }
+@app.route('/<input>')
+def server_input(input):
+#server_input parsii syötteen ja syöttää pelaajan valinnat game-funktioon joka pyörittää peliä
+#kesken!
+    flight
+    vastaus = game(flight_type, destination)
 
     return vastaus
 
-def sql_request(icao):
-    nimi = "testi"
-    kaupunki = "espoo"
+def game(input):
+    data_dic = { "game_status" : "gameinprogress/gameover/game won",
+"name":"Xxx",
+"location_icao":"efhk",
+"location_name":"helsinki",
+"location_country":"Suomi",
+"location_lat":"60.23",
+"location_lon":"24.74",
+"money":"1500",
+"co2":"100",
+"money_gained":"20",
+"money_spent":"100",
+"distance":"1000",
+#time, temperature, weather on reaaliaikaisia muuttujia joita ei tallenneta tietokantaan.
+"time":"12.00",
+"temperature":"20",
+"weather":"cloudy?",
 
-    return nimi, kaupunki
+#lista tarjolla olevista lennoista
+"flights" : [   {"name":"a", "icao":"efhk", "cost":"x", "distance":"100", "co2":"50", "lat":"50.22", "lon":"20.22"},
+                {"name":"a", "icao":"efhk", "cost":"x", "distance":"100", "co2":"50", "lat":"50.22", "lon":"20.22"},
+                {"name":"a", "icao":"efhk", "cost":"x", "distance":"100", "co2":"50", "lat":"50.22", "lon":"20.22"},
+                {"name":"a", "icao":"efhk", "cost":"x", "distance":"100", "co2":"50", "lat":"50.22", "lon":"20.22"}
+                 ],
 
-#Pääohjelma
-# if True näyttää toimivan myös... Miksi tämä on kirjoitettu näin?
-# __name__ == __main__ kun script ajetaan suoraan eikä osana pakettia?
-
-#if __name__ == '__main__':
-#    app.run(use_reloader=True, host='127.0.0.1', port=3000)
+#lista KAIKISTA lentokentistä. Vieraillut ja tavoite kentät on osoitettu booleilla: goal ja visited True/False
+"airports" : [  {"goal" : True , "visited":True, "name": "helsinki", "country":"suomi", "lat": "50.22", "lon": "20.22"},
+                {"goal" : False , "visited":False, "name": "espoo", "country":"suomi", "lat": "50.22", "lon": "20.22"},
+                {"goal" : True , "visited":False, "name": "vantaa", "country":"suomi", "lat": "50.22", "lon": "20.22"}
+                ]
+}
+    return data_dic
 
 app.run(use_reloader=True, host='127.0.0.1', port=3000)
+
+

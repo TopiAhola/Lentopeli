@@ -27,6 +27,8 @@ Muutokset pythoniin:
 -Tarvitaan sijaintitiedot kohteille?
     destination_lat, destination_lon?
 
+-Serveri hakee säätilan openweatherista ja palauttaa kellonajan ja sään selaimelle.
+
 
 
 Javascript client:
@@ -47,37 +49,36 @@ Esimerkki selaimen palauttamasta json-tietorakenteesta:
 Aloitettaessa uusi peli: {}
 
 Pelatessa:
- { "game_status" : "gameinprogress/gameover/game won"
-   "name":"Xxx",
-   "location_icao":"efhk",
-   "location_name":"helsinki",
-   "location_country":"Suomi",
-   "location_lat":"60.23"
-   "location_lon":"24.74"
-   "money":"1500",
-   "co2":"100",
-   "money_gained":"20",
-   "money_spent":"100",
-   "distance":"1000"
+{ "game_status" : "gameinprogress/gameover/game won"
+"name":"Xxx",
+"location_icao":"efhk",
+"location_name":"helsinki",
+"location_country":"Suomi",
+"location_lat":"60.23"
+"location_lon":"24.74"
+"money":"1500",
+"co2":"100",
+"money_gained":"20",
+"money_spent":"100",
+"distance":"1000",
+"time":"12.00",
+"temperature":"20",
+"weather":"cloudy?",
 
-   "flights_array" : [  {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
-                        {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
-                        {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
-                        {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"}
-                     ]
-   "goals_array" : [{"goal" : "a", "reached" : "0/1"},
-                    {"goal" : "b", "reached" : "0/1"},
-                    {"goal" : "c", "reached" : "0/1"},
-                    {"goal" : "d", "reached" : "0/1"},
-                    {"goal" : "e", "reached" : "0/1"}
-                    ]
-   "visited_array" : [ halutaanko käydyt maat näyttää kartalla tai listassa?
-
-   ]
-
-
-
- }
+"flights_array" : [  {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
+                    {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
+                    {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"},
+                    {"destination":"a", "cost":"x", "distance":"100", "co2":"50", "destination_lat":"50.22", "destination_lon":"20.22"}
+                 ],
+"goals_array" : [{"goal" : "a", "reached" : "0/1"},
+                {"goal" : "b", "reached" : "0/1"},
+                {"goal" : "c", "reached" : "0/1"},
+                {"goal" : "d", "reached" : "0/1"},
+                {"goal" : "e", "reached" : "0/1"}
+                ],
+"visited_array" : [ "halutaanko käydyt maat näyttää kartalla tai listassa?"],
+"airport_array" : [ "lista kaikista lentokentistä"    ]
+}
 
 
 ## game_id, game_name, game_location, game_money, game_co2, game_money_gained, game_money_spent, game_distance

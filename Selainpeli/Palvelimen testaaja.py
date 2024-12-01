@@ -13,7 +13,7 @@ print(vastaus1)
 #Pelaa peliä testi:
 flight_type = input("Anna lennon luokka: ")
 destination = input("Anna icao-koodi: ")
-pyyntö2 = f"http://127.0.0.1:3000/{flight_type}{destination}"
+pyyntö2 = f"http://127.0.0.1:3000/{flight_type}/{destination}"
 print(pyyntö2)
 vastaus_raw2 = requests.get(pyyntö2)
 print(vastaus_raw2)
@@ -25,3 +25,5 @@ print(vastaus2["airports"][0])
 print(vastaus2["airports"][1])
 if vastaus2["airports"][0]["visited"]:
     print("Kentällä on käyty")
+
+print(vastaus2['name'],vastaus2['flight_type'],vastaus2['destination'])

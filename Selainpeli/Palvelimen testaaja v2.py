@@ -12,15 +12,16 @@ print(vastaus_raw1)
 vastaus1 = vastaus_raw1.json()
 print(vastaus1)
 
-#Pelaa peliä testi:
-flight_type = input("Anna lennon luokka: ")
-destination = input("Anna icao-koodi: ")
-pyyntö2 = f"http://127.0.0.1:3000/{flight_type}/{destination}"
-print(pyyntö2)
-vastaus_raw2 = requests.get(pyyntö2)
-print(vastaus_raw2)
-vastaus2 = vastaus_raw2.json()
-print(vastaus2)
+while True:
+    #Pelaa peliä testi:
+    flight_type = input("Anna lennon luokka: ")
+    destination = input("Anna icao-koodi: ")
+    pyyntö2 = f"http://127.0.0.1:3000/{flight_type}/{destination}"
+    print(pyyntö2)
+    vastaus_raw2 = requests.get(pyyntö2)
+    print(vastaus_raw2)
+    vastaus2 = vastaus_raw2.json()
+    print(vastaus2)
 
 '''
 #Testitulosteita: 

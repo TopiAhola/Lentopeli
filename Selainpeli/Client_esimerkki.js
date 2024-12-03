@@ -21,16 +21,11 @@ async function new_game() {
         let vastaus1_json = await vastaus1.json();
         console.log(vastaus1_json)
         document.getElementById("tuloste").innerText = vastaus1_json;
-
   }
     catch (error) {
     console.log(error.message);
   }
-
 }
-
-
-
 
 async function play_game() {
   console.log("play_game funktio")

@@ -89,7 +89,7 @@ if True:
 ## Tietorakenne ##
 '''
 game_data = {
-        "game_status": "gameinprogress/gameover/game won",
+        "game_status": "gameinprogress/gameover/gamewon",
         "message": "default",
         "name": "default",
         "flight_type": "default",

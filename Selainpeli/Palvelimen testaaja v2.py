@@ -4,8 +4,8 @@ import json
 #Uusi peli testi
 name = input("Anna nimi: ")
 difficulty = input("Anna vaikeusaste: ")
-start_money = input("Anna aloitusrahat: ")
-pyyntö1 = f"http://127.0.0.1:3000/newgame/{name}/{difficulty}/{start_money}"
+
+pyyntö1 = f"http://127.0.0.1:3000/newgame/{name}/{difficulty}"
 print(pyyntö1)
 vastaus_raw1 = requests.get(pyyntö1)
 print(vastaus_raw1)

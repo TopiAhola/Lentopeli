@@ -382,11 +382,13 @@ CORS(app)
 
 @app.route('/loadgame/<name>')
 def server_loadgame(name): #Vaihtaa aktiivisen peliobjektin nimen perusteella
+    print("Lataa peli:", name)
     Game.active_game = name
     return json.dumps(Game.games[Game.active_game].get_data())
 
 @app.route('/newgame/<nimi>/<difficulty>')
 def server_newgame(nimi, difficulty): #Alustaa uuden Game-luokan objektin ja palauttaa pelin tilanteen.
+    print("Uusi peli:", nimi, difficulty)
     new_game = Game(**game_data_default)                            #Määritellään pelaaja Game luokkaan oletus attribuuteilla
     Game.games[nimi] = new_game                                     #Pelaajaoliota kutsutaan: Game.games[active_game] Olisi parempi laittaa vain Game.active_game...
     Game.active_game = nimi                                         #Laitetaan luokkamuuttuja osoittamaan uusimpaan peliin
@@ -402,6 +404,7 @@ def server_newgame(nimi, difficulty): #Alustaa uuden Game-luokan objektin ja pal
 
 @app.route('/<flight_type>/<destination>')
 def server_input(flight_type, destination):
+    print("Lennä:",flight_type, destination)
     destination = destination.upper()                                #ICAO koodit on isolla kirjaimella
     flight_type = flight_type.upper()                                #Lentoluokka SMALL/NORMAL/HIGH
     Game.games[Game.active_game].fly(flight_type, destination)       #tekee lennon muutokset (lisää päästöjä, vähemmän rahaa, saapumispalkkio, )
@@ -414,6 +417,7 @@ def server_input(flight_type, destination):
 
 @app.route('/gamelist')
 def server_gamelist(): #Palauttaa listan Game luokan objektien tiedoista. Avain on pelaajan nimi. #Muutetaan ARRAYKSI!!
+    print("Palautetaan peli lista")
     gamelist = []
     for key, object in Game.games.items():
         gamelist.append(object.get_data())

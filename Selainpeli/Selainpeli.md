@@ -3,7 +3,7 @@
 ## Palautus:
 Tiedostot kansiossa SELAINPELI_PALAUTUS <br>
 Viimeisimmän version tiedostot ovat: <br>
-Palvelin_v10.py, js3.js, peli2v2.html, peli2v2.css <br>
+Palvelin_v10.py, js3.js, peli2v2.html, peli2v2.css ja tervetuloa.css <br>
 Tietokanta pitää luoda SQL tiedostoilla 1,2,3 ja 4
 
 ### Sivu - HTML, CSS ja JavaSCript

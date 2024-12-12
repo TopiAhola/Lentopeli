@@ -90,7 +90,7 @@ async function newGame() {
 
   const screen = document.getElementById("welcome-screen");
   screen.style.display = "none";
-  gamer_tag = games.length - 1;
+  gamer_tag = games.length;
   loadGame(gamer_tag);
   return gamer_tag;
 }

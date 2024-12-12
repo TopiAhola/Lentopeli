@@ -69,17 +69,6 @@ async function newGame() {
     }
   });
 
-  // Nollataan pelaajan tiedot
-  playerData = {
-    name: "",
-    budget: 1500,
-    emissions: 0,
-    visitedAirports: 0,
-    currentAirport: [50.23, 13.74],
-    visitedCoordinates: [],
-    currentAirportName: "Praha",
-  };
-
   const name = document.getElementById("nimi").value;
   const difficulty = document.getElementById("vaikeus").value;
   const vastaus1 = await fetch(
@@ -90,9 +79,7 @@ async function newGame() {
 
   const screen = document.getElementById("welcome-screen");
   screen.style.display = "none";
-  gamer_tag = games.length;
-  loadGame(gamer_tag);
-  return gamer_tag;
+  collabTag(name);
 }
 
 /* Peli valikko */
@@ -103,20 +90,29 @@ async function loadList() {
   const target = document.getElementById("myModal");
   target.innerHTML = ""
 
-  for (let i = 0; i < games.length; i++) {
-    var gamer_tag = i;
-    // Place
+  Object.values(games).forEach((game) => {
     let card = document.createElement("div");
     card.setAttribute("class", "modal-content");
     card.innerHTML = `
-        <h2>${games[i].name}</h2>        
-        <p>Vaikeus taso: ${games[i].difficulty} | Sijainti: ${
-      games[i].location.country
-    } | CO2: ${games[i].co2} | Rahat: ${games[i].money}€</p>
-        <button onclick="loadGame('${[gamer_tag]}')">Lataa Peli</button>
+        <h2>${game.name}</h2>        
+        <p>Vaikeus taso: ${game.difficulty} | Sijainti: ${
+      game.location.country
+    } | CO2: ${game.co2} | Rahat: ${game.money}€</p>
+        <button onclick="collabTag('${game.name}')">Lataa Peli</button>
         `;
     target.appendChild(card);
-  }
+  });
+}
+
+async function collabTag(tag){
+  const lataa = await fetch(
+    `http://127.0.0.1:3000/loadgame/${tag}`
+  );
+  const lataa_json = await lataa.json();
+  console.log(lataa_json);
+  gamer_tag = tag;
+  loadGame(gamer_tag);
+  return gamer_tag;
 }
 
 /* Pelin lataus */
@@ -146,7 +142,7 @@ async function loadGame(gamer_tag) {
     let markerColor = "red"; // Oletusväri
 
     if (location == lentokentta) {
-      markerColor = "blue";
+      markerColor = "blue"; // Pelaaja on tässä kentässä
     } else if (visited == true) {
       markerColor = "grey";  // Kenttä on käyty, niin väri harmaaksi
     }
@@ -165,18 +161,24 @@ async function loadGame(gamer_tag) {
       }
     }
 
+    // Tavoitekenttä (goal) ja pelaajan saapuminen sinne
     if (goal == true) {
-      markerColor = "purple";
+      markerColor = "purple";  // Alustava väri
+      if (location == lentokentta) {
+        markerColor = "blue"; // Tavoitekenttä muuttuu siniseksi, jos pelaaja on siellä
+      }
     }
 
-    // Lisää markkerit
-    const marker = L.circleMarker(coords, {
-      color: markerColor, // Väri
-      radius: 6, // Pisteen koko
-      weight: 2, // Reunan paksuus
-      opacity: 1, // Täytteen läpinäkyvyys
-      fillOpacity: 1, // Täytteen läpinäkyvyys
-    }).addTo(map).bindPopup(`    
+    // Luo divIcon-tyylinen markkeri (moderni tyyli)
+    const marker = L.divIcon({
+      className: 'airport-marker',
+      html: `<div class="marker" style="background-color: ${markerColor};">
+            </div>`,
+      iconSize: [14, 14], // Pisteen koko
+      iconAnchor: [6, 6], // Keskittää markkerin
+    });
+
+    const mapMarker = L.marker(coords, { icon: marker }).addTo(map).bindPopup(`
       <b>${games[gamer_tag].airports[i].name}</b><br>
       <button onclick="showFlightDialog('${
         games[gamer_tag].airports[i].name
@@ -187,15 +189,20 @@ async function loadGame(gamer_tag) {
 
     // Jos kenttä on käyty, lisää CSS-luokka
     if (visited) {
-      marker.getElement().classList.add("visited");
+      mapMarker.getElement().classList.add("visited");
     }
 
+    // Jos ei ole lentoa, vain tavallinen popup
     if (!lentoBoolean) {
-      marker.bindPopup(`<b>${games[gamer_tag].airports[i].name}</b>`);
+      mapMarker.bindPopup(`<b>${games[gamer_tag].airports[i].name}</b>`);
     }
   }
+
   update_player_info(gamer_tag);
+  return gamer_tag;
 }
+
+
 
 
 /* Pelaaminen */
@@ -204,10 +211,9 @@ async function playGame(flight_type, destination) {
   let vastaus2 = await fetch(query);
   let vastaus2_json = await vastaus2.json();
   console.log(vastaus2_json);
-  loadGame(gamer_tag);
+  collabTag(gamer_tag);
 }
 
-// newGame();
 loadList();
 
 // Globaalit muuttujat ja pelaajan tiedot
@@ -222,6 +228,7 @@ let playerData = {
   visitedCoordinates: [], // Käydyt lentokentät
   currentAirportName: "Praha", // Aloituskentän nimi
 };
+
 
 // *** Säätiedon haku ***
 function fetchWeather(coords, callback) {
@@ -261,6 +268,14 @@ function updateWeatherInfo(weather, city) {
 // *** Lentokentän valinta ***
 function showFlightDialog(airportName, airportCoords, airportIcao) {
   fetchWeather(airportCoords, (weather, city) => {
+    const distance = calculateDistance(playerData.currentAirport, airportCoords); // Laske etäisyys
+    const costsPerKm = { small: 0.4, normal: 0.3, high: 0.2 }; // Hinnat per kilometri
+
+    // Lasketaan hinnat eri lentotyypeille
+    const smallCost = Math.round(distance * costsPerKm.small).toFixed(2);
+    const normalCost = Math.round(distance * costsPerKm.normal).toFixed(2);
+    const highCost = Math.round(distance * costsPerKm.high).toFixed(2);
+
     const dialog = document.createElement("div");
     dialog.className = "flight-dialog";
     dialog.innerHTML = `
@@ -268,14 +283,14 @@ function showFlightDialog(airportName, airportCoords, airportIcao) {
       <p>${weather}</p>
       <p>Valitse lentoluokka:</p>
       <button onclick="confirmFlight('${airportName}', ${JSON.stringify(
-      airportCoords
-    )}, 'small', '${airportIcao}')">Vähänpäästöinen</button>
+        airportCoords
+      )}, 'small', '${airportIcao}')">Vähänpäästöinen - Hinta: €${smallCost}</button>
       <button onclick="confirmFlight('${airportName}', ${JSON.stringify(
-      airportCoords
-    )}, 'normal', '${airportIcao}')">Keskipäästöinen</button>
+        airportCoords
+      )}, 'normal', '${airportIcao}')">Keskipäästöinen - Hinta: €${normalCost}</button>
       <button onclick="confirmFlight('${airportName}', ${JSON.stringify(
-      airportCoords
-    )}, 'high', '${airportIcao}')">Suurpäästöinen</button>
+        airportCoords
+      )}, 'high', '${airportIcao}')">Suurpäästöinen - Hinta: €${highCost}</button>
       <button onclick="closeDialog()">Peruuta</button>
     `;
     document.body.appendChild(dialog);
@@ -324,7 +339,6 @@ function confirmFlight(airportName, airportCoords, flightType, airportIcao) {
   updatePlayerInfo();
   fetchWeather(playerData.currentAirport, updateWeatherInfo); // Päivitä säätiedot kenttämuutoksen jälkeen
   closeDialog();
-  checkGameStatus();
 }
 
 
@@ -365,32 +379,49 @@ function toRad(value) {
 }
 
 // *** Pelin tilan tarkastus ***
-function checkGameStatus() {
-  const goalAirports = games[gamer_tag].airports.filter((airport) => airport.goal);
-  const visitedGoals = goalAirports.every((airport) => airport.visited);
-
-  if (visitedGoals) {
-    alert("Onneksi olkoon! Olet voittanut pelin!");
-    location.reload();
-  } else if (playerData.budget <= 0) {
-    alert("Rahasi loppuivat. Peli päättyi.");
-    location.reload();
-  }
-}
-
 function update_player_info(gamer_tag) {
-  //Päivittää sivupalkin pelaajatiedot
-  //Lasketaan käydyt kentät:
+  // Lasketaan käydyt kentät
   let visited_count = 0;
   for (let airport of games[gamer_tag].airports) {
     if (airport.visited == true) {
-      visited_count = visited_count + 1;
+      visited_count++;
     }
   }
-  //Laitetaan arvot sivulle:
+
+  // Tavoitekentät ja käydyt tavoitekentät
+  const goalAirports = games[gamer_tag].airports.filter((airport) => airport.goal);
+  const visitedGoalsCount = goalAirports.filter((airport) => airport.visited).length;
+
+  // Päivitetään pelaajatiedot
   document.getElementById("player-name").innerText = games[gamer_tag].name;
   document.getElementById("player-budjetti").innerText = games[gamer_tag].money;
   document.getElementById("player-kohde").innerText = visited_count;
   document.getElementById("player-paastot").innerText = games[gamer_tag].co2;
-  document.getElementById("player-location").innerText = games[gamer_tag].location.name;
+  document.getElementById("player-location").innerText =
+    games[gamer_tag].location.name;
+
+  // Päivitetään tieto tavoitekentistä
+  document.getElementById(
+    "player-goals-visited"
+  ).textContent = `${visitedGoalsCount}/${goalAirports.length}`;
+
+  // Tarkistetaan, onko pelaaja tavoitekentällä
+  const playerMessageElement = document.getElementById("player-message");
+  const isPlayerAtGoal = goalAirports.some(
+    (airport) => airport.name === games[gamer_tag].location.name
+  );
+
+  // Näytä viesti, jos pelaaja on tavoitekentällä
+  if (isPlayerAtGoal) {
+    playerMessageElement.textContent = "Olet tällä hetkellä tavoitelentokentällä!";
+  } else {
+    playerMessageElement.textContent = ""; // Tyhjennä viesti, jos pelaaja ei ole enää tavoitekentällä
+  }
+
+  // Voittotilanteen tarkistus
+  if (goalAirports.every((airport) => airport.visited)) {
+    alert("Onneksi olkoon! Olet voittanut pelin!");
+    location.reload();
+  }
 }
+

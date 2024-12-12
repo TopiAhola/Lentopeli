@@ -1,10 +1,11 @@
 ## Eurooppalainen Turisti - Selainpeli
 
 ## Palautus:
-Tiedostot kansiossa SELAINPELI_PALAUTUS_3 <br>
+Tiedostot kansiossa SELAINPELI_PALAUTUS_4 <br>
 Viimeisimmän version tiedostot ovat: <br>
 Palvelin_v11.py, js3.js, peli2v2.html, peli2v2.css ja tervetuloa.css <br>
-Tietokanta pitää luoda SQL tiedostoilla 1,2,3 ja 4
+Tietokanta pitää luoda SQL tiedostoilla 1,2,3 ja 4 <br>
+Kuvat kansiossa on 1 kuva
 
 ### Sivu - HTML, CSS ja JavaSCript
 Sivu sisältää käyttöliittymän joka näyttää pelin tilanteen palvelimen palauttaman json-objektin perusteella. <br>
